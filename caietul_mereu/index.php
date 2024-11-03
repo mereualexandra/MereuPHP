@@ -1,18 +1,11 @@
-<!-- <?php
-// Load the Router
+<?php
 require_once "config/routes.php";
+require_once "config/pdo.php"; 
 
 // Start the session (optional, if using sessions)
 session_start();
 
-// Get the current URI
-$uri = trim($_SERVER["REQUEST_URI"], "/");
-
-echo $uri;
-
 // Initialize the router and route the request
 $router = new Router();
-$router->direct($uri);
-?> -->
-
-<h1>aloooo</h1>
+$router->direct();
+?>

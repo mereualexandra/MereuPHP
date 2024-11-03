@@ -10,8 +10,9 @@ class Debt {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function getDebt($debt_id) {
+    public static function getDebt() {
         global $pdo;
+        $debt_id = $_GET['id'];
 
         $sql = "SELECT * 
                 FROM debts 

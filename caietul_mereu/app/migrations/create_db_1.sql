@@ -2,14 +2,14 @@
 CREATE DATABASE caietul_mereu CHARACTER SET=utf8mb4;
 
 -- create the user and grant privileges
--- CREATE USER 'mereuuser'@'localhost' IDENTIFIED BY 'mereupass';
+CREATE USER 'mereuuser'@'localhost' IDENTIFIED BY 'mereupass';
 GRANT ALL ON caietul_mereu.* TO 'mereuuser'@'localhost';
 
 -- create the user and grant privileges
--- CREATE USER 'mereuuser'@'127.0.0.1' IDENTIFIED BY 'mereupass';
+CREATE USER 'mereuuser'@'127.0.0.1' IDENTIFIED BY 'mereupass';
 GRANT ALL ON caietul_mereu.* TO 'mereuuser'@'127.0.0.1';
 
---if you run the commans from phpmyadmin, comment the next line
+-- if you run the commans from phpmyadmin, comment the next line
 USE caietul_mereu;
 
 -- create the tables
@@ -54,7 +54,7 @@ CREATE TABLE debts (
 CREATE TABLE migrations (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(128) NOT NULL UNIQUE,
-    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- insert the default roles

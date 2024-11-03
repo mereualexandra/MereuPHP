@@ -1,10 +1,8 @@
 <?php
-require_once "config/pdo.php";
 
 class User {
     public static function getAllUsers() {
         global $pdo;
-
         $sql = "SELECT * 
                 FROM users";
         $stmt = $pdo->query($sql);
@@ -14,7 +12,7 @@ class User {
     public static function getUser($user_id) {
         global $pdo;
 
-        $sql = "SELECT * 
+        $sql = "SELECT * s
                 FROM users 
                 WHERE user_id = :user_id";
         $stmt = $pdo->prepare($sql);
