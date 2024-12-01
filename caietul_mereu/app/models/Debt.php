@@ -16,10 +16,26 @@ class Debt {
 
         $sql = "SELECT * 
                 FROM debts 
-                WHERE debt_id = :debt_id";
+                WHERE id = :debt_id";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(array(":debt_id" => $debt_id));
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public static function updateDebt($debt_id, $amount, $reason, $status) {
+        global $pdo;
+
+        $sql = "UPDATE debts
+                SET amount = :amount, reason = :reason, status = :debt_status
+                WHERE id = :debt_id";
+        $stmt = $pdo->prepare($sql);
+        
+        $stmt->execute(array(
+            ":debt_id" => $debt_id,
+            ":amount" => $amount,
+            ":reason" => $reason,
+            ":debt_status" => $status
+        ));
     }
 }
 ?>

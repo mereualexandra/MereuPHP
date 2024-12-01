@@ -13,12 +13,17 @@
         <th>First Name</th>
         <th>Last Name</th>
         <th>Email</th>
+        <th>Action</th>
     </tr>
     <?php foreach ($users as $user) : ?>
         <tr>
             <td><?= $user["first_name"] ?></td>
             <td><?= $user["last_name"] ?></td>
             <td><?= $user["email"] ?></td>
+            <td>
+                <a href="show?id=<?= $user["id"] ?>">Show</a> |
+                <a href="edit?id=<?= $user["id"] ?>">Edit</a> 
+            </td>
         </tr>
     <?php endforeach; ?>
 </table>

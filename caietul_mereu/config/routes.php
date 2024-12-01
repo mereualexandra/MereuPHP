@@ -1,7 +1,11 @@
 <?php
 $routes = [
     "caietul_mereu/debts/index" => ["DebtController", "index"],
+    "caietul_mereu/debts/show" => ["DebtController", "show"],
+    "caietul_mereu/debts/edit" => ["DebtController", "edit"],
     "caietul_mereu/users/index" => ["UserController", "index"],
+    "caietul_mereu/users/show" => ["UserController", "show"],
+    "caietul_mereu/users/edit" => ["UserController", "edit"],
 ];
 
 class Router {
@@ -9,7 +13,7 @@ class Router {
 
     public function __construct() {
         // Get the current URI
-        $this->uri = trim($_SERVER["REQUEST_URI"], "/");
+        $this->uri = trim(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH), "/");
     }
 
     public function direct() {

@@ -13,12 +13,16 @@
         <th>Amount</th>
         <th>Reason</th>
         <th>Status</th>
+        <th>Actions</th>
     </tr>
     <?php foreach ($debts as $debt) : ?>
         <tr>
             <td><?= $debt["reason"] ?></td>
             <td><?= $debt["amount"] ?></td>
             <td><?= $debt["status"] ?></td>
+            <td>
+                <a href="show?id=<?= $debt["id"] ?>">Show</a> |
+                <a href="edit?id=<?= $debt["id"] ?>">Edit</a>
         </tr>
     <?php endforeach; ?>
     
