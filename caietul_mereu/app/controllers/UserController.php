@@ -20,6 +20,25 @@ class UserController{
         }
     }
 
+    static function data_validation() {
+        $errors = [];
+        $len_name = strlen($_POST['last_name']);
+        if ($len_name < 1 || $len_name > 32) {
+            $errors['last_name_error'] = 'Last name must be between 1 and 32 characters';  
+        }
+        if (strpos($_POST['email'], '@') === false) {
+            $errors['email_error'] = 'Invalid email';
+        }
+        if (isset($_POST['password']) && strlen($_POST['password']) < 8) {
+            $errors['password_error'] = 'Password must be at least 8 characters';
+        }
+        if (isset($_POST['role_id']) && !UserRole::getRole($_POST['role_id'])) {
+            $errors['role_error'] = 'Invalid role';
+        }
+
+        return $errors;
+    }
+
     public static function edit() {
         // GET is set when the user clicks the edit button
         // POST is set when the user submits the form
@@ -38,15 +57,9 @@ class UserController{
             // empty session variables
             $_SESSION["edit_user"] = [];
             // Data validation
-            $len_name = strlen($_POST['last_name']);
-            if ($len_name < 1 || $len_name > 32) {
-                $_SESSION["edit_user"]['last_name_error'] = 'Last name must be between 1 and 32 characters';
-                header("Location: edit?id=".$_POST['id']);
-                return;
-            }
-
-            if (strpos($_POST['email'], '@') === false) {
-                $_SESSION["edit_user"]['email_error'] = 'Invalid email';
+            $errors = self::data_validation();
+            if (count($errors) > 0) {
+                $_SESSION["edit_user"] = $errors;
                 header("Location: edit?id=".$_POST['id']);
                 return;
             }
@@ -66,5 +79,49 @@ class UserController{
             require_once "app/views/users/edit.php";
         }
     }
+
+    public static function delete() {
+        $user_id = $_GET["id"];
+
+        User::deleteUser($user_id);
+
+        header("Location: index");
+        return;
+    }
+
+    public static function create() {
+        if (isset($_POST["is_post"])){
+            // POST => create user
+            $_SESSION["create_user"]["user"] = $_POST;
+
+            $errors = self::data_validation();
+            if (count($errors)){
+                $_SESSION["create_user"]["errors"] = $errors;
+                header("Location: create");
+                return;
+            }
+           $pass = password_hash($_POST["password"], PASSWORD_DEFAULT);
+
+            User::createUser(
+                htmlentities($_POST["first_name"]), 
+                htmlentities($_POST["last_name"]),
+                htmlentities($_POST["email"]), 
+                $pass,
+                htmlentities($_POST["role_id"])
+            );
+            header("Location: index");
+        }
+        // GET => show form
+        if (!isset($_SESSION["create_user"]["user"])){
+            $_SESSION["create_user"]["user"] = [
+                "first_name" => "",
+                "last_name" => "",
+                "email" => ""
+            ];
+        }
+        $roles  = UserRole::getAllRoles();
+        require_once "app/views/users/create.php";
+    }
+
 }
 ?>

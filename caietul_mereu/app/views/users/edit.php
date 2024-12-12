@@ -19,6 +19,7 @@
             <?php  
                 if (isset($_SESSION["edit_user"]) && isset($_SESSION["edit_user"]['first_name_error'])) 
                 echo $_SESSION["edit_user"]['first_name_error'];
+                unset($_SESSION["edit_user"]['first_name_error']);
             ?>
         </p>
         <p><label for="email">Email</label>

@@ -8,6 +8,8 @@
 </head>
 <body>
 <h1>All Users</h1>
+<a href="/caietul_mereu/">Back</a>
+<button><a href="create">Create</a></button>
 <table>
     <tr>
         <th>First Name</th>
@@ -22,7 +24,8 @@
             <td><?= $user["email"] ?></td>
             <td>
                 <a href="show?id=<?= $user["id"] ?>">Show</a> |
-                <a href="edit?id=<?= $user["id"] ?>">Edit</a> 
+                <a href="edit?id=<?= $user["id"] ?>">Edit</a> |
+                <a href="delete?id=<?= $user["id"] ?>">Delete</a>
             </td>
         </tr>
     <?php endforeach; ?>

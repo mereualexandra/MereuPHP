@@ -3,9 +3,16 @@ $routes = [
     "caietul_mereu/debts/index" => ["DebtController", "index"],
     "caietul_mereu/debts/show" => ["DebtController", "show"],
     "caietul_mereu/debts/edit" => ["DebtController", "edit"],
+
     "caietul_mereu/users/index" => ["UserController", "index"],
     "caietul_mereu/users/show" => ["UserController", "show"],
     "caietul_mereu/users/edit" => ["UserController", "edit"],
+    "caietul_mereu/users/delete" => ["UserController", "delete"],
+    "caietul_mereu/users/create" => ["UserController", "create"],
+
+    "caietul_mereu/auth/login" => ["AuthController", "login"],
+    "caietul_mereu/auth/logout" => ["AuthController", "logout"],
+    "caietul_mereu" => ["AuthController", "landing_page"],
 ];
 
 class Router {
