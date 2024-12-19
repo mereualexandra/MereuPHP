@@ -58,9 +58,9 @@ CREATE TABLE migrations (
 ) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- insert the default roles
-INSERT INTO user_roles (name) VALUES ('admin');
-INSERT INTO user_roles (name) VALUES ('user');
-INSERT INTO user_roles (name) VALUES ('guest');
+INSERT INTO user_roles (id, name) VALUES (1,'admin');
+INSERT INTO user_roles (id, name) VALUES (2,'user');
+INSERT INTO user_roles (id, name) VALUES (3,'guest');
 
 -- insert the default debt types
 INSERT INTO debt_types (name, description) VALUES ('one_time', 'A one time debt. Ussually used for debts for not so close friends.');

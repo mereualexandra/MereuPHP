@@ -5,6 +5,11 @@ class UserController{
     public static function index() {
 
         $users = User::getAllUsers();
+        $create_permission = (
+            isset($_SESSION["request_user"])  &&
+            User::hasPermission($_SESSION["request_user"]["id"], "create_user")
+        );
+
         require_once "app/views/users/index.php";
     }
 
@@ -43,9 +48,26 @@ class UserController{
         // GET is set when the user clicks the edit button
         // POST is set when the user submits the form
         // We need to handle both cases
-        $user_id = $_GET['id'] ? $_GET['id'] : $_POST['id'];
-        $user = User::getUser($user_id);
+        if (!isset($_SESSION["request_user"]) ||
+            !User::hasPermission($_SESSION["request_user"]["id"], "edit_user")
+        ){
+            $_SESSION["error"]= "Invalid permissions";
+            require_once "app/views/404.php";
+            return;
+        }
 
+        $user_id = $_GET['id'] ? $_GET['id'] : $_POST['id'];
+
+        $role = UserRole::getRole($_SESSION["request_user"]["role_id"]);
+        if ($role["name"] != "admin" && $user_id != $_SESSION["request_user"]["id"]){
+                $_SESSION["error"]= "Invalid permissions";
+                require_once "app/views/404.php";
+                return;
+            }
+        
+
+
+        $user = User::getUser($user_id);
         if (!$user) {
             $_SESSION['error'] = "User not found";
             require_once "app/views/404.php";
@@ -81,6 +103,15 @@ class UserController{
     }
 
     public static function delete() {
+        if (!isset($_SESSION["request_user"]) ||
+            !User::hasPermission($_SESSION["request_user"]["id"], "delete_user")
+            ){
+                $_SESSION["error"]= "Invalid permissions";
+                require_once "app/views/404.php";
+                return;
+            }
+        
+
         $user_id = $_GET["id"];
 
         User::deleteUser($user_id);
@@ -90,6 +121,18 @@ class UserController{
     }
 
     public static function create() {
+        if (!isset($_SESSION["request_user"])){
+            header("Location: /caietul_mereu");
+        }
+        //user is logged in => check user role
+        $role = UserRole::getRole($_SESSION["request_user"]["role_id"]);
+        if ($role["name"] != "admin"){
+            $_SESSION["error"]= "Invalid permissions";
+            require_once "app/views/404.php";
+            return;
+        }
+
+
         if (isset($_POST["is_post"])){
             // POST => create user
             $_SESSION["create_user"]["user"] = $_POST;

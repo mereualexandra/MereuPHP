@@ -8,6 +8,6 @@
 </head>
 <body>
     <h1>404 Not found</h1>
-    <p><?php array_key_exists('error', $_SESSION)? $_SESSION['error'] : 'Page not found' ?></p>
+    <p><?php echo (isset($_SESSION['error'])? $_SESSION['error'] : 'Page not found') ?></p>
 </body>
 </html>

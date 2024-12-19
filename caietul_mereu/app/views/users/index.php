@@ -9,7 +9,10 @@
 <body>
 <h1>All Users</h1>
 <a href="/caietul_mereu/">Back</a>
-<button><a href="create">Create</a></button>
+<?php  if ($create_permission){
+    echo ("<button><a href='create'>Create</a></button>");
+}
+?>
 <table>
     <tr>
         <th>First Name</th>
